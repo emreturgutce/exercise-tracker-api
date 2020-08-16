@@ -31,7 +31,7 @@ router.get('/', async (req, res) => {
  * @param username?: String
  * @param email?: String
  * @param password?: String
- * @description Update user by id
+ * @description Update the authenticated user
  */
 router.put('/', async (req, res) => {
   const { _id } = (req as any).user;
@@ -60,8 +60,7 @@ router.put('/', async (req, res) => {
 
 /**
  * @method DELETE
- * @param id: Number
- * @description Delete user by id
+ * @description Delete the authenticated user
  */
 router.delete('/', async (req, res) => {
   const { _id } = (req as any).user;
@@ -82,6 +81,22 @@ router.delete('/', async (req, res) => {
       message: 'User could not deleted',
       error: err.message,
     });
+  }
+});
+
+/**
+ * @method GET
+ * @description Logout the authenticated user
+ */
+router.get('/logout', async (req, res) => {
+  const { _id } = req.user as any;
+  try {
+    await User.updateOne({ _id }, { tokens: [] });
+    res.status(200).json({
+      message: 'Logged out',
+    });
+  } catch (err) {
+    res.status(500).json({ message: 'Could not logged out' });
   }
 });
 
