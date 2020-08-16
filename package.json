@@ -41,6 +41,8 @@
     "typescript": "^3.9.7"
   },
   "dependencies": {
+    "@types/passport-jwt": "^3.0.3",
+    "@types/passport-local": "^1.0.33",
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
@@ -49,6 +51,9 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.26",
     "morgan": "^1.10.0",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
     "validator": "^13.1.1"
   }
 }
