@@ -2,6 +2,7 @@
 import { Router } from 'express';
 import validator from 'validator';
 import User from '../models/user';
+import passport from '../config/passport';
 
 const router = Router();
 
@@ -12,31 +13,16 @@ const router = Router();
  * @param password: String
  * @description Signup user
  */
-router.post('/signup', async (req, res) => {
-  const { username, email, password } = req.body;
-  try {
-    if (!username || !email || !password)
-      throw new Error('All fields must be filled');
-    if (!validator.isEmail(email)) throw new Error('Email is not valid');
-    const user = await new User({
-      username,
-      email,
-      password,
-    }).save();
-    await (user as any).generateAuthToken();
+router.post(
+  '/signup',
+  passport.authenticate('signup', { session: false }),
+  (req, res) => {
     res.status(201).json({
       message: 'User created',
-      data: {
-        user,
-      },
-    });
-  } catch (err) {
-    res.status(400).json({
-      message: 'User could not created',
-      error: err.message,
+      data: { user: req.user },
     });
   }
-});
+);
 
 /**
  * @method POST
@@ -44,24 +30,15 @@ router.post('/signup', async (req, res) => {
  * @param password: String
  * @description Login user
  */
-router.post('/login', async (req, res) => {
-  const { username, password } = req.body;
-  try {
-    if (!username || !password) throw new Error('All fields must be filled');
-    const user = await (User as any).findByCredentials(username, password);
-    await (user as any).generateAuthToken();
-    res.status(201).json({
-      message: 'User created',
-      data: {
-        user,
-      },
-    });
-  } catch (err) {
-    res.status(400).json({
-      message: 'User could not created',
-      error: err.message,
+router.post(
+  '/login',
+  passport.authenticate('login', { session: false }),
+  (req, res) => {
+    res.status(200).json({
+      message: 'Logged In',
+      data: { user: req.user },
     });
   }
-});
+);
 
 export default router;
