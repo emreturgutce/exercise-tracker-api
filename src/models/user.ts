@@ -34,10 +34,10 @@ const UserSchema = new Schema(
 );
 
 UserSchema.statics.findByCredentials = async (
-  username: string,
+  email: string,
   password: string
 ) => {
-  const user = await User.findOne({ username });
+  const user = await User.findOne({ email });
   if (!user) throw new Error('User does not exist');
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const isMatch = await bcrypt.compare(password, (user! as any).password);
