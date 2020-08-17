@@ -10,7 +10,7 @@ import passport from './config/passport';
 import notFound from './middleware/notFound';
 import errorHandler from './middleware/errorHandler';
 import rateLimit from 'express-rate-limit';
-import timeout from 'connect-timeout';
+// import timeout from 'connect-timeout';
 
 const app = express();
 
@@ -20,7 +20,7 @@ app.use(
     max: 100,
   })
 );
-app.use(timeout('2s'));
+// app.use(timeout('2s'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());

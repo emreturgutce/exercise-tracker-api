@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Schema, model } from 'mongoose';
+import { Schema, model, Types } from 'mongoose';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
@@ -29,6 +29,10 @@ const UserSchema = new Schema(
         token: String,
       },
     ],
+    exerciseListId: {
+      type: Types.ObjectId,
+      required: true,
+    },
   },
   { timestamps: true }
 );

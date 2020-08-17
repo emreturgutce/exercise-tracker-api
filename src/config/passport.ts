@@ -2,6 +2,7 @@ import passport from 'passport';
 import passportLocal from 'passport-local';
 import passportJWT from 'passport-jwt';
 import User from '../models/user';
+import ExerciseList from '../models/exerciseList';
 import validator from 'validator';
 
 const LocalStrategy = passportLocal.Strategy;
@@ -22,10 +23,12 @@ passport.use(
         if (!username || !email || !password)
           throw new Error('All fields must be filled');
         if (!validator.isEmail(email)) throw new Error('Email is not valid');
+        const exerciseList = await new ExerciseList({}).save();
         const user = await new User({
           username,
           email,
           password,
+          exerciseListId: exerciseList._id,
         }).save();
         await (user as any).generateAuthToken();
         done(null, user);
