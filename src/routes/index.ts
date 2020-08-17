@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Router } from 'express';
-import validator from 'validator';
-import User from '../models/user';
 import passport from '../config/passport';
 
 const router = Router();

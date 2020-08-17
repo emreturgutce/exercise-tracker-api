@@ -85,6 +85,7 @@ router.delete('/', async (req, res) => {
 });
 
 /**
+ * @todo work on tokens
  * @method GET
  * @description Logout the authenticated user
  */
